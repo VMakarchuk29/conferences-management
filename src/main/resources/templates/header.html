@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/" th:text="#{header.title}"></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="navbar-brand">
+                <a th:href="@{''(lang=ua)}">
+                    <img th:src="@{/images/ukraine-flag-round-xs.png}" style="width: 30px;"/>
+                </a>
+            </li>
+            <li class="navbar-brand">
+                <a th:href="@{''(lang=en)}">
+                    <img th:src="@{/images/united-states-of-america-flag-round-xs.png}" style="width: 30px;"/>
+                </a>
+            </li>
+
+            <li sec:authorize="!isAuthenticated()">
+                <a class="nav-link" th:href="@{/signup}" th:text="#{header.sign-up}"><span
+                        class="glyphicon glyphicon-user"></span></a>
+            </li>
+            <li sec:authorize="!isAuthenticated()">
+                <a class="nav-link" th:href="@{/login}" th:text="#{header.login}"><span
+                        class="glyphicon glyphicon-log-in"></span></a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/logout}" th:text="#{header.logout}"></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>
