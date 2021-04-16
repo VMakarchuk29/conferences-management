@@ -14,12 +14,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/webjars/**", "/images/**", "/signup**").permitAll()
+                .antMatchers("/webjars/**", "/images/**", "/signup**", "/login/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .usernameParameter("email")
                 .permitAll()
 
                 .and()
