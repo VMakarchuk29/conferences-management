@@ -25,7 +25,9 @@ public class UserInfo {
     private String lastName;
     private LocalDate birthday;
     private String phoneNumber;
-    private String gender; //TODO gender enum
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;

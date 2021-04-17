@@ -1,6 +1,7 @@
 package com.conference.demo.service.impl;
 
 import com.conference.demo.dto.UserRegistrationDTO;
+import com.conference.demo.entities.Gender;
 import com.conference.demo.entities.Role;
 import com.conference.demo.entities.User;
 import com.conference.demo.entities.UserInfo;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService {
                 .birthday(LocalDate.parse(dto.getBirthday()))
                 .phoneNumber(dto.getPhoneNumber())
                 .createdAt(LocalDateTime.now())
-                .gender(dto.getGender())
+                .gender(dto.getGender().equalsIgnoreCase("female") ? Gender.FEMALE : Gender.MALE)
                 .build();
     }
 
@@ -70,10 +72,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Invalid username or password."));
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
     }

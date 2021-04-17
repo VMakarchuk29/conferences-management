@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class AuthController {
@@ -40,14 +41,16 @@ public class AuthController {
     public String registrationUser(@ModelAttribute("registrationDTO")
                                    @Valid UserRegistrationDTO userRegistrationDTO,
                                    BindingResult result) {
+
+        Optional<User> existing = userService.findByEmail(userRegistrationDTO.getEmail());
+
+        if (existing.isPresent()) {
+            result.rejectValue("email", null, "There is already an account registered with that email");
+        }
         if (result.hasErrors()) {
             return "registration";
         }
-        User existing = userService.findByEmail(userRegistrationDTO.getEmail());
-        if (existing != null) {
-            result.rejectValue("email", null, "There is already an account registered with that email");
-        }
         userService.save(userRegistrationDTO);
-        return "redirect:/registration?success";
+        return "redirect:/signup?success";
     }
 }

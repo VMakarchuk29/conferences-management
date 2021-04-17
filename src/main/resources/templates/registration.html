@@ -129,12 +129,15 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <label class="radio-inline">
-                                    <input type="radio" id="femaleRadio" th:field="*{gender}" value="Female">Female
+                                    <input type="radio" id="femaleRadio" th:field="*{gender}" value="Female">
+                                    <label th:text="#{registration.female}"></label>
                                 </label>
                             </div>
                             <div class="col-sm-4">
                                 <label class="radio-inline">
-                                    <input type="radio" id="maleRadio" th:field="*{gender}" value="Male">Male
+                                    <input type="radio" id="maleRadio" th:field="*{gender}" value="Male">
+                                    <label th:text="#{registration.male}"></label>
+
                                 </label>
                             </div>
                             <div class="col-sm-9">

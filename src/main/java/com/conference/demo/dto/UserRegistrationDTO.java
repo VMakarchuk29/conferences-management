@@ -12,7 +12,7 @@ public class UserRegistrationDTO {
     private static final String USER_PHONE_REGEX = "^\\+380[0-9]{9}";
 
     @NotEmpty(message = "{invalid.empty}")
-    @Size(max = 50)
+    @Size(max = 50) // TODO add messages
     private String firstName;
 
     @NotEmpty(message = "{invalid.empty}")
