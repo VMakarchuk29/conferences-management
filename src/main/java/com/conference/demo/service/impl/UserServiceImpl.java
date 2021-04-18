@@ -5,6 +5,7 @@ import com.conference.demo.entities.Gender;
 import com.conference.demo.entities.Role;
 import com.conference.demo.entities.User;
 import com.conference.demo.entities.UserInfo;
+import com.conference.demo.exception.UserAlreadyExistException;
 import com.conference.demo.repository.UserRepository;
 import com.conference.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,16 +42,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(UserRegistrationDTO userDTO) {
-        User user = createUser(userDTO);
-        UserInfo userInfo = createUserInfo(userDTO);
+    public User registerNewUserAccount(UserRegistrationDTO userDTO) throws UserAlreadyExistException {
+        if (emailExists(userDTO.getEmail())) {
+            throw new UserAlreadyExistException("There is an account with that email address");
+        }
+
+        User user = buildUser(userDTO);
+        UserInfo userInfo = buildUserInfo(userDTO);
 
         userInfo.setUser(user);
         user.setUserInfo(userInfo);
+
         return userRepository.save(user);
     }
 
-    private UserInfo createUserInfo(UserRegistrationDTO dto) {
+    private boolean emailExists(String email) {
+        return findByEmail(email).isPresent();
+    }
+
+    private UserInfo buildUserInfo(UserRegistrationDTO dto) {
         return UserInfo.builder()
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
@@ -61,7 +71,7 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-    private User createUser(UserRegistrationDTO dto) {
+    private User buildUser(UserRegistrationDTO dto) {
         return User.builder()
                 .userName(dto.getUserName())
                 .email(dto.getEmail())

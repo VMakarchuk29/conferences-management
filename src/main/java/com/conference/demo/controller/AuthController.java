@@ -1,7 +1,7 @@
 package com.conference.demo.controller;
 
 import com.conference.demo.dto.UserRegistrationDTO;
-import com.conference.demo.entities.User;
+import com.conference.demo.exception.UserAlreadyExistException;
 import com.conference.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 public class AuthController {
@@ -42,15 +41,16 @@ public class AuthController {
                                    @Valid UserRegistrationDTO userRegistrationDTO,
                                    BindingResult result) {
 
-        Optional<User> existing = userService.findByEmail(userRegistrationDTO.getEmail());
-
-        if (existing.isPresent()) {
-            result.rejectValue("email", null, "There is already an account registered with that email");
-        }
         if (result.hasErrors()) {
             return "registration";
         }
-        userService.save(userRegistrationDTO);
+
+        try {
+            userService.registerNewUserAccount(userRegistrationDTO);
+        } catch (UserAlreadyExistException e) {
+            result.rejectValue("email", null, e.getMessage());//TODO replace message
+            return "registration";
+        }
         return "redirect:/signup?success";
     }
 }

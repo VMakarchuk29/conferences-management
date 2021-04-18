@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 
-@PasswordMatch(first = "password", second = "confirmPassword", message = "{invalid.password-match}")
+@PasswordMatch(message = "{invalid.password-match}")
 @Data
 public class UserRegistrationDTO {
     private static final String USER_PHONE_REGEX = "^\\+380[0-9]{9}";
