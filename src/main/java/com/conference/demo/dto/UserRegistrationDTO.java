@@ -1,13 +1,19 @@
 package com.conference.demo.dto;
 
 import com.conference.demo.constraint.PasswordMatch;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 
 @PasswordMatch(message = "{invalid.password-match}")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRegistrationDTO {
     private static final String USER_PHONE_REGEX = "^\\+380[0-9]{9}";
 
