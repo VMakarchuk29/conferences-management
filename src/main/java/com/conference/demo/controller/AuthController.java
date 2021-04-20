@@ -53,7 +53,7 @@ public class AuthController {
         } catch (UserAlreadyExistException e) {
             result.rejectValue("email", null, e.getMessage());//TODO replace message
 
-            log.warn("Account already registered with that email address: " + userRegistrationDTO.getEmail());
+            log.error("Account already registered with that email address: " + userRegistrationDTO.getEmail());
             return "registration";
         }
         return "redirect:/signup?success";
