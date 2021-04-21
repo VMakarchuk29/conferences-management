@@ -44,27 +44,13 @@ public class ConferenceServiceImpl implements ConferenceService {
     }
 
     private Page<Conference> checkIfPageExist(Pageable pageable, Page<Conference> pages) throws PageNotFound {
-        if (isPageExist(pageable.getPageNumber(), pages)) {
+        if (isPageNotExist(pageable.getPageNumber(), pages)) {
             throw new PageNotFound("Conferences pages don't have this page: " + (pageable.getPageNumber() + 1));
         }
         return pages;
     }
 
-    private boolean isPageExist(int pageNumber, Page<Conference> pages) {
+    private boolean isPageNotExist(int pageNumber, Page<Conference> pages) {
         return pages.getTotalPages() != 0 && pages.getTotalPages() <= pageNumber;
-    }
-
-    @Override
-    public int getStartPage(Page<Conference> pages) {
-        int start = Math.max(1, pages.getNumber());
-        if (pages.getNumber() == pages.getTotalPages() - 1 && pages.getNumber() > 1)
-            start--;
-        return start;
-    }
-
-    @Override
-    public int getLastPage(Page<Conference> pages) {
-        int start = Math.max(1, pages.getNumber());
-        return Math.min(start + 2, pages.getTotalPages());
     }
 }

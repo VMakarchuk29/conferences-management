@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
+
+    <title>User list</title>
+</head>
+<body>
+<header th:insert="header.html :: nav"></header>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<table class="table" style="width: 1100px; margin-left: auto; margin-right: auto;">
+
+    <thead class="thead">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" th:text="#{user-list.first-name}"></th>
+        <th scope="col" th:text="#{user-list.last-name}"></th>
+        <th scope="col" th:text="#{user-list.username}"></th>
+        <th scope="col" th:text="#{user-list.email}"></th>
+        <th scope="col" th:text="#{user-list.role}"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="user, state : ${pages}">
+        <td th:scope="col" th:text="${state.count}"></td>
+        <td th:text="${user.userInfo.firstName}"></td>
+        <td th:text="${user.userInfo.lastName}"></td>
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.role}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
