@@ -5,6 +5,9 @@
 
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
 
@@ -15,6 +18,82 @@
 <br>
 <br>
 <br>
-<h1>Conferences list</h1>
+
+<div class="container">
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link"
+               th:classappend="${url == '/conferences'} ? 'disabled': ''"
+               th:href="@{/conferences}"
+               th:text="#{conference.all}">
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+               th:classappend="${url == '/conferences/past-events'} ? 'disabled': ''"
+               th:href="@{/conferences/past-events}"
+               th:text="#{conference.past}">
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+               th:classappend="${url == '/conferences/upcoming-events'} ? 'disabled': ''"
+               th:href="@{/conferences/upcoming-events}"
+               th:text="#{conference.upcoming}">
+            </a>
+        </li>
+    </ul>
+
+    <div class="row justify-content-md-center" th:if="${conferences.isEmpty()}">
+        <h1 th:text="#{pagination.no-conferences-found}"></h1>
+
+    </div>
+    <div class="card m-4" th:each="conference: ${conferences}">
+        <div class="card-header" th:text="${conference.topic}">
+            Featured
+        </div>
+        <div class="card-body">
+            <h4 class="card-title" th:text="'Topic of reports: ' + ${conference.topicOfReports}"></h4>
+            <h6 class="card-text" th:text="'Number people: ' + ${conference.numberOfParticipants}"></h6>
+            <h6 class="card-text" th:text="'Time of holding: ' + ${conference.timeOfHolding}"></h6>
+            <h6 class="card-text" th:text="'Venue: ' + ${conference.venue}"></h6>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center" th:if="${!conferences.isEmpty()}">
+        <ul class="pagination" th:with="start = ${start}, last = ${last}">
+
+            <li class="page-item" th:classappend="${conferences.getNumber() + 1} == 1 ? 'disabled': ''">
+                <a class="page-link" th:href="@{${url}(page = 1)}"
+                   th:text="#{pagination.first-page}"></a>
+            </li>
+
+            <li class="page-item" th:classappend="*{!conferences.hasPrevious()} ? 'disabled': ''">
+                <a class="page-link" th:href="@{${url}(page = ${conferences.getNumber()})}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li th:each="page : ${#numbers.sequence(start, last)}"
+                th:class="${page == conferences.getNumber() + 1} ? 'page-item  active' : 'page-item'">
+                <a class="page-link" th:href="@{${url}(page = ${page})}" th:text="${page}"></a>
+            </li>
+
+            <li class="page-item" th:classappend="*{!conferences.hasNext()} ? 'disabled': ''">
+                <a class="page-link"
+                   th:href="@{${url}(page = ${conferences.getNumber() + 2})}">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:classappend="${conferences.getNumber() + 1 == last} ? 'disabled': ''">
+                <a class="page-link" th:href="@{${url}(page = ${conferences.totalPages})}"
+                   th:text="#{pagination.last-page}"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
 </body>
 </html>
