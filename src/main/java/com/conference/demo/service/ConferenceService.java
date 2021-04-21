@@ -12,6 +12,10 @@ public interface ConferenceService {
 
     Page<Conference> findAll(Pageable pageable) throws PageNotFound;
 
+    Page<Conference> findAllUpcomingConference(Pageable pageable) throws PageNotFound;
+
+    Page<Conference> findAllPastConference(Pageable pageable) throws PageNotFound;
+
     int getStartPage(Page<Conference> pages);
 
     int getLastPage(Page<Conference> pages);
