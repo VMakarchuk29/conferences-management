@@ -1,7 +1,7 @@
 package com.conference.demo.controller;
 
 import com.conference.demo.entities.Conference;
-import com.conference.demo.exception.PageNotFound;
+import com.conference.demo.exception.PageNotFoundException;
 import com.conference.demo.service.ConferenceService;
 import com.conference.demo.util.Pagination;
 import org.apache.log4j.Logger;
@@ -29,8 +29,8 @@ public class ConferenceController {
         String url = "/conferences";
         try {
             addAttributes(model, conferenceService.findAll(pageable), url);
-        } catch (PageNotFound pageNotFound) {
-            log.error(pageNotFound.getMessage());
+        } catch (PageNotFoundException pageNotFoundException) {
+            log.error(pageNotFoundException.getMessage());
             return String.format("redirect:%s?page=1", url);
         }
         return "index";
@@ -41,8 +41,8 @@ public class ConferenceController {
         String url = "/conferences/upcoming-events";
         try {
             addAttributes(model, conferenceService.findAllUpcomingConference(pageable), url);
-        } catch (PageNotFound pageNotFound) {
-            log.error(pageNotFound.getMessage());
+        } catch (PageNotFoundException pageNotFoundException) {
+            log.error(pageNotFoundException.getMessage());
             return String.format("redirect:%s?page=1", url);
         }
         return "index";
@@ -53,8 +53,8 @@ public class ConferenceController {
         String url = "/conferences/past-events";
         try {
             addAttributes(model, conferenceService.findAllPastConference(pageable), url);
-        } catch (PageNotFound pageNotFound) {
-            log.error(pageNotFound.getMessage());
+        } catch (PageNotFoundException pageNotFoundException) {
+            log.error(pageNotFoundException.getMessage());
             return String.format("redirect:%s?page=1", url);
         }
         return "index";

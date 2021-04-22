@@ -6,4 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserListService {
     Page<User> findAllUsers(Pageable pageable);
+
+    int deleteUserById(long id);
 }

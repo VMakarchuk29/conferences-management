@@ -51,6 +51,12 @@
         <td th:text="${user.userName}"></td>
         <td th:text="${user.email}"></td>
         <td th:text="${user.role}"></td>
+        <td>
+            <a th:href="@{/user-list/delete-user/{id}(id =${user.id}, page = ${users.getNumber() + 1}, size = ${users.getSize()})}"
+               class="btn btn-danger"
+               th:text="#{user-list.delete}">
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
