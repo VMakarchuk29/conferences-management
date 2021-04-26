@@ -47,6 +47,9 @@
                         class="glyphicon glyphicon-log-in"></span></a>
             </li>
             <li sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/profile}" th:text="#{header.profile}"></a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
                 <a class="nav-link" th:href="@{/logout}" th:text="#{header.logout}"></a>
             </li>
         </ul>
