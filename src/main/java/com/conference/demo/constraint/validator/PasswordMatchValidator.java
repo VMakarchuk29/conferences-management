@@ -1,5 +1,6 @@
-package com.conference.demo.constraint;
+package com.conference.demo.constraint.validator;
 
+import com.conference.demo.constraint.PasswordMatch;
 import com.conference.demo.dto.UserRegistrationDTO;
 
 import javax.validation.ConstraintValidator;

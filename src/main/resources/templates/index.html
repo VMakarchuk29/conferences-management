@@ -18,82 +18,142 @@
 <br>
 <br>
 <br>
-
 <div class="container">
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link"
-               th:classappend="${url == '/conferences'} ? 'disabled': ''"
-               th:href="@{/conferences}"
-               th:text="#{conference.all}">
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link"
-               th:classappend="${url == '/conferences/past-events'} ? 'disabled': ''"
-               th:href="@{/conferences/past-events}"
-               th:text="#{conference.past}">
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link"
-               th:classappend="${url == '/conferences/upcoming-events'} ? 'disabled': ''"
-               th:href="@{/conferences/upcoming-events}"
-               th:text="#{conference.upcoming}">
-            </a>
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card">
+                <article class="card-group-item">
+                    <div class="list-group">
+                        <a th:href="@{/conferences}"
+                           th:classappend="${url == '/conferences'} ? 'active': ''"
+                           class="list-group-item list-group-item-action"
+                           th:text="#{conference.all}">
+                        </a>
+                        <a th:href="@{/conferences/past-events}"
+                           class="list-group-item list-group-item-action"
+                           th:classappend="${url == '/conferences/past-events'} ? 'active': ''"
+                           th:text="#{conference.past}"></a>
+                        <a th:href="@{/conferences/upcoming-events}"
+                           class="list-group-item list-group-item-action"
+                           th:classappend="${url == '/conferences/upcoming-events'} ? 'active': ''"
+                           th:text="#{conference.upcoming}"></a>
+                    </div>
+                </article>
+            </div>
 
-    <div class="row justify-content-md-center" th:if="${conferences.isEmpty()}">
-        <h1 th:text="#{pagination.no-conferences-found}"></h1>
-
-    </div>
-    <div class="card m-4" th:each="conference: ${conferences}">
-        <div class="card-header" th:text="${conference.topic}">
-            Featured
+            <div class="card mt-3">
+                <article class="card-group-item">
+                    <header class="card-header">
+                        <h6 class="title">DATA </h6>
+                    </header>
+                    <div class="filter-content">
+                        <div class="card-body">
+                            <form method="get" th:action="@{/conferences/date-range}" th:object="${dateRangeDTO}">
+                                <label>From
+                                    <input type="date" class="form-control" th:field="*{from}">
+                                    <p class="error-message text-danger"
+                                       th:each="error: ${#fields.errors('from')}"
+                                       th:text="${error}"></p>
+                                </label>
+                                <label>To
+                                    <input type="date" class="form-control" th:field="*{to}">
+                                    <p class="error-message text-danger"
+                                       th:each="error: ${#fields.errors('to')}"
+                                       th:text="${error}"></p>
+                                </label>
+                                <p class="error-message text-danger"
+                                   th:each="error: ${#fields.globalErrors()}"
+                                   th:text="${error}"></p>
+                                <div class="col text-center">
+                                    <input type="submit" value="Search">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </div>
         </div>
-        <div class="card-body">
-            <h4 class="card-title" th:text="'Topic of reports: ' + ${conference.topicOfReports}"></h4>
-            <h6 class="card-text" th:text="'Number people: ' + ${conference.numberOfParticipants}"></h6>
-            <h6 class="card-text" th:text="'Time of holding: ' + ${conference.timeOfHolding}"></h6>
-            <h6 class="card-text" th:text="'Venue: ' + ${conference.venue}"></h6>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+
+        <div class="col-sm-9">
+            <div class="row justify-content-md-center" th:if="${conferences.isEmpty()}">
+                <h1 th:text="#{pagination.no-conferences-found}"></h1>
+            </div>
+
+
+            <div class="card-body mb-3">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label class="m-1" for="rowsPerPage">Rows per page:</label>
+                        <select id="rowsPerPage" class="form-control"
+                                onchange="location = location.protocol + '//' + location.host + location.pathname + this.value">
+                            <option th:selected="${conferences.getSize()==1}" value="?size=1">1</option>
+                            <option th:selected="${conferences.getSize()==3}" value="?size=3">3</option>
+                            <option th:selected="${conferences.getSize()==5}" value="?size=5">5</option>
+                            <option th:selected="${conferences.getSize()==7}" value="?size=7">7</option>
+                            <option th:selected="${conferences.getSize()==10}" value="?size=10">10</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="m-1" for="sortBy">Order by:</label>
+                        <select id="sortBy" class="form-control">
+                            <option>Descendent</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="card mb-3" th:each="conference: ${conferences}">
+                <div class="card-header" th:text="${conference.topic}">
+                    Featured
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title" th:text="'Topic of reports: ' + ${conference.topicOfReports}"></h4>
+                    <h6 class="card-text" th:text="'Number people: ' + ${conference.numberOfParticipants}"></h6>
+                    <h6 class="card-text" th:text="'Time of holding: ' + ${conference.timeOfHolding}"></h6>
+                    <h6 class="card-text" th:text="'Venue: ' + ${conference.venue}"></h6>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+
+            <div class="row justify-content-md-center" th:if="${!conferences.isEmpty()}">
+                <ul class="pagination" th:with="start = ${start}, last = ${last}">
+
+                    <li class="page-item" th:classappend="${conferences.getNumber() + 1} == 1 ? 'disabled': ''">
+                        <a class="page-link" th:href="@{${url}(size = ${conferences.getSize()}, page = 1)}"
+                           th:text="#{pagination.first-page}"></a>
+                    </li>
+
+                    <li class="page-item" th:classappend="*{!conferences.hasPrevious()} ? 'disabled': ''">
+                        <a class="page-link"
+                           th:href="@{${url}(size = ${conferences.getSize()}, page = ${conferences.getNumber()})}">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page : ${#numbers.sequence(start, last)}"
+                        th:class="${page == conferences.getNumber() + 1} ? 'page-item  active' : 'page-item'">
+                        <a class="page-link" th:href="@{${url}(size = ${conferences.getSize()}, page = ${page})}"
+                           th:text="${page}"></a>
+                    </li>
+
+                    <li class="page-item" th:classappend="*{!conferences.hasNext()} ? 'disabled': ''">
+                        <a class="page-link"
+                           th:href="@{${url}(size = ${conferences.getSize()}, page = ${conferences.getNumber() + 2})}">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${conferences.getNumber() + 1 == last} ? 'disabled': ''">
+                        <a class="page-link"
+                           th:href="@{${url}(size = ${conferences.getSize()}, page = ${conferences.totalPages})}"
+                           th:text="#{pagination.last-page}"></a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
-
-    <div class="row justify-content-md-center" th:if="${!conferences.isEmpty()}">
-        <ul class="pagination" th:with="start = ${start}, last = ${last}">
-
-            <li class="page-item" th:classappend="${conferences.getNumber() + 1} == 1 ? 'disabled': ''">
-                <a class="page-link" th:href="@{${url}(page = 1)}"
-                   th:text="#{pagination.first-page}"></a>
-            </li>
-
-            <li class="page-item" th:classappend="*{!conferences.hasPrevious()} ? 'disabled': ''">
-                <a class="page-link" th:href="@{${url}(page = ${conferences.getNumber()})}">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-
-            <li th:each="page : ${#numbers.sequence(start, last)}"
-                th:class="${page == conferences.getNumber() + 1} ? 'page-item  active' : 'page-item'">
-                <a class="page-link" th:href="@{${url}(page = ${page})}" th:text="${page}"></a>
-            </li>
-
-            <li class="page-item" th:classappend="*{!conferences.hasNext()} ? 'disabled': ''">
-                <a class="page-link"
-                   th:href="@{${url}(page = ${conferences.getNumber() + 2})}">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-
-            <li class="page-item" th:classappend="${conferences.getNumber() + 1 == last} ? 'disabled': ''">
-                <a class="page-link" th:href="@{${url}(page = ${conferences.totalPages})}"
-                   th:text="#{pagination.last-page}"></a>
-            </li>
-        </ul>
-    </div>
-</div>
 </div>
 </body>
 </html>

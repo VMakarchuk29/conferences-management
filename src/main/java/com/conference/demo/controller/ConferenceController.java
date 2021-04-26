@@ -1,5 +1,6 @@
 package com.conference.demo.controller;
 
+import com.conference.demo.dto.DateRangeDTO;
 import com.conference.demo.entities.Conference;
 import com.conference.demo.exception.PageNotFoundException;
 import com.conference.demo.service.ConferenceService;
@@ -10,8 +11,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping({"/conferences", "/"})
@@ -24,6 +29,11 @@ public class ConferenceController {
         this.conferenceService = conferenceService;
     }
 
+    @ModelAttribute
+    private DateRangeDTO getDateRange() {
+        return new DateRangeDTO();
+    }
+
     @GetMapping
     public String showAllConferences(Model model, Pageable pageable) {
         String url = "/conferences";
@@ -34,6 +44,14 @@ public class ConferenceController {
             return String.format("redirect:%s?page=1", url);
         }
         return "index";
+    }
+
+    @GetMapping("date-range")
+    public String showAllConferencesInDateRange(@ModelAttribute @Valid DateRangeDTO range, BindingResult result) {
+        if (result.hasErrors()) {
+            log.error("The date range form has errors: " + range);
+        } // TODO Implement this method
+        return "redirect:/conferences";
     }
 
     @GetMapping("/upcoming-events")
