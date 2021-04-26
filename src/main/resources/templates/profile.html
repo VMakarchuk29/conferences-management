@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
+    <title>Profile</title>
+</head>
+<body>
+<header th:insert="header.html :: nav"></header>
+
+<br/>
+<br/>
+<br/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="text-center">
+                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
+                     alt="avatar">
+                <input type="file" class="text-center center-block file-upload">
+            </div>
+        </div>
+
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                       aria-controls="profile" aria-selected="true">Profile</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                       aria-controls="home" aria-selected="false">Home</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                       aria-controls="contact" aria-selected="false">Contact</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="container m-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label th:text="#{profile.name}">Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${user.userInfo.firstName} + ' ' + ${user.userInfo.lastName}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label th:text="#{profile.username}"></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${user.userName}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label th:text="#{profile.email}"></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${user.email}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label th:text="#{profile.date-of-birth}"></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${user.userInfo.birthday}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label th:text="#{profile.phone-number}"></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${user.userInfo.phoneNumber}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label th:text="#{profile.gender}"></label>
+                            </div>
+                            <div class="col-md-6">
+                                <p th:text="${user.userInfo.gender} == 'MALE' ? #{profile.male} : #{profile.female}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
