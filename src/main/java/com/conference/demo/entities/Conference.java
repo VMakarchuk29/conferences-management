@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "conference")
@@ -17,7 +18,11 @@ public class Conference {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String topic;
-    private String topicOfReports; //TODO make List<Topic> topicOfReports
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "conference_id", referencedColumnName = "id")
+    private List<ReportTopic> topicOfReports;
+
     private LocalDateTime timeOfHolding;
     private int numberOfParticipants;
     private String venue;

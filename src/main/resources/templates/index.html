@@ -108,7 +108,10 @@
                     Featured
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title" th:text="'Topic of reports: ' + ${conference.topicOfReports}"></h4>
+                    <h4 class="card-title" th:text="'Topic of reports: '"></h4>
+                    <div th:each="topic: ${conference.topicOfReports}">
+                        <h5 th:text="${topic.topic}"></h5>
+                    </div>
                     <h6 class="card-text" th:text="'Number people: ' + ${conference.numberOfParticipants}"></h6>
                     <h6 class="card-text" th:text="'Time of holding: ' + ${conference.timeOfHolding}"></h6>
                     <h6 class="card-text" th:text="'Venue: ' + ${conference.venue}"></h6>
