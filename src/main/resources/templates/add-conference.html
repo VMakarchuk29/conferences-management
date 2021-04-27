@@ -24,12 +24,18 @@
                 <input id="topic" type="text" class="form-control" th:field="*{topic}">
             </div>
         </div>
+
         <div class="form-group row">
             <label for="report" class="col-4 col-form-label">Report topic</label>
             <div class="col-8">
-                <input id="report" type="text" class="form-control" th:field="*{topicOfReports}">
+                <input id="report" type="text" class="form-control" th:field="*{topicOfReports[0]}">
             </div>
         </div>
+
+
+        <div id="newRow"></div>
+        <button id="addRow" type="button" class="btn btn-info">Add Row</button>
+
         <div class="form-group row">
             <label for="text1" class="col-4 col-form-label">Date</label>
             <div class="col-8">
@@ -62,5 +68,31 @@
     </form>
 
 </div>
+
+<script type="text/javascript">
+    let count = 1;
+    $("#addRow").click(function () {
+        let html = '<div id="inputFormRow">\n' +
+            '    <div class="form-group row">\n' +
+            '        <label for="report" class="col-4 col-form-label"></label>\n' +
+            '        <div class="col-8">\n' +
+            '            <input id="report" type="text" class="form-control" name="topicOfReports[' + count + ']">\n' +
+            '            <div class="input-group-append">\n' +
+            '                <button id="removeRow" type="button" class="btn btn-danger">Remove</button>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div>';
+
+
+        count++
+
+        $('#newRow').append(html);
+    });
+
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+</script>
 </body>
 </html>

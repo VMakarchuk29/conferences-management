@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class CreateConferenceServiceImpl implements CreateConferenceService {
@@ -30,13 +33,20 @@ public class CreateConferenceServiceImpl implements CreateConferenceService {
                 .timeOfHolding(LocalDateTime.of(dto.getDate(), dto.getTime()))
                 .numberOfParticipants(dto.getNumberOfParticipants())
                 .venue(dto.getVenue())
-                .topicOfReport(buildReportTopic(dto))
+                .topicOfReports(buildReportTopicList(dto))
                 .build();
     }
 
-    private ReportTopic buildReportTopic(CreateConferenceDTO dto) {
-        return ReportTopic.builder()
-                .topic(dto.getTopicOfReports())
-                .build();
+    private Collection<ReportTopic> buildReportTopicList(CreateConferenceDTO dto) {
+        List<ReportTopic> result = new ArrayList<>();
+        for (String topic : dto.getTopicOfReports()) {
+            result.add(
+                    ReportTopic.builder()
+                            .topic(topic)
+                            .build()
+            );
+        }
+
+        return result;
     }
 }
