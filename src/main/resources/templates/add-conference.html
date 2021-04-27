@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
+
+    <title>Add Conference</title>
+</head>
+<body>
+<header th:insert="header.html :: nav"></header>
+
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <form class="needs-validation" th:action="@{/add-conference}" th:object="${dto}" method="post">
+        <div class="form-group row">
+            <label for="topic" class="col-4 col-form-label">Topic</label>
+            <div class="col-8">
+                <input id="topic" type="text" class="form-control" th:field="*{topic}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="report" class="col-4 col-form-label">Report topic</label>
+            <div class="col-8">
+                <input id="report" type="text" class="form-control" th:field="*{topicOfReports}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="text1" class="col-4 col-form-label">Date</label>
+            <div class="col-8">
+                <input id="text1" type="date" class="form-control" th:field="*{date}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="text2" class="col-4 col-form-label">Time</label>
+            <div class="col-8">
+                <input id="text2" type="time" class="form-control" th:field="*{time}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="text3" class="col-4 col-form-label">Number participants</label>
+            <div class="col-8">
+                <input id="text3" name="text3" type="number" class="form-control" th:field="*{numberOfParticipants}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="text4" class="col-4 col-form-label">Venue</label>
+            <div class="col-8">
+                <input id="text4" name="text4" type="text" class="form-control" th:field="*{venue}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-4 col-8">
+                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

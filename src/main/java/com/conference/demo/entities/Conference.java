@@ -1,11 +1,10 @@
 package com.conference.demo.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,15 +12,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Conference {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String topic;
 
+    @Singular
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "conference_id", referencedColumnName = "id")
-    private List<ReportTopic> topicOfReports;
+    private List<ReportTopic> topicOfReports = new ArrayList<>();
 
     private LocalDateTime timeOfHolding;
     private int numberOfParticipants;
