@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
+
+    <title>Add Conference</title>
+</head>
+<body>
+<header th:insert="header.html :: nav"></header>
+
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 th:text="#{conference.create.title}"></h1>
+    </div>
+    <form class="needs-validation mt-4" th:action="@{/add-conference}" th:object="${dto}" method="post">
+        <div class="form-group row">
+            <label for="topic" class="col-4 col-form-label" th:text="#{conference.topic}"></label>
+            <div class="col-8">
+                <input id="topic" type="text" class="form-control" th:field="*{topic}"
+                       th:placeholder="#{conference.topic}"
+                       th:classappend="${#fields.hasErrors()} ? (${#fields.hasErrors('topic')}? 'is-invalid':'is-valid') : ''">
+                <p class="error-message text-danger"
+                   th:each="error: ${#fields.errors('topic')}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="report" class="col-4 col-form-label" th:text="#{conference.report-topic}"></label>
+            <div class="col-8">
+                <input id="report" type="text" class="form-control" th:field="*{topicOfReports[0].topic}"
+                       th:placeholder="#{conference.report-topic}"
+                       th:classappend="${#fields.hasErrors()} ? (${#fields.hasErrors('topicOfReports[0].topic')}? 'is-invalid':'is-valid') : ''">
+                <p class="error-message text-danger"
+                   th:each="error: ${#fields.errors('topicOfReports[0].topic')}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+
+        <div th:if="${#fields.hasErrors()}">
+            <div th:each="topic, state: *{topicOfReports}">
+                <div th:if="${state.index != 0}" class="form-group row" id="inputFormRow">
+                    <label for="topic" class="col-4 col-form-label"></label>
+                    <div class="col-8">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control"
+                                   th:field="*{topicOfReports[__${state.index}__].topic}"
+                                   th:placeholder="#{conference.report-topic}"
+                                   th:classappend="(${#fields.hasErrors('topicOfReports['+__${state.index}__+'].topic')}? 'is-invalid':'is-valid')"
+                            >
+                            <div class="input-group-append">
+                                <button id="removeRow" class="btn btn-danger" type="button">Delete</button>
+                            </div>
+                        </div>
+                        <p class="error-message text-danger"
+                           th:each="error: ${#fields.errors('topicOfReports['+__${state.index}__+'].topic')}"
+                           th:text="${error}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="newRow"></div>
+        <div class="form-group row">
+            <div class="offset-4 col-8 text-center">
+                <button id="addRow" type="button" class="btn btn-info"
+                        th:text="#{conference.add-report-topic}"></button>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="text1" class="col-4 col-form-label" th:text="#{conference.date}"></label>
+            <div class="col-8">
+                <input id="text1" type="date" class="form-control" th:field="*{date}"
+                       th:placeholder="#{conference.date}"
+                       th:classappend="${#fields.hasErrors()} ? (${#fields.hasErrors('date')}? 'is-invalid':'is-valid') : ''">
+                <p class="error-message text-danger"
+                   th:each="error: ${#fields.errors('date')}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="text2" class="col-4 col-form-label" th:text="#{conference.time}"></label>
+            <div class="col-8">
+                <input id="text2" type="time" class="form-control" th:field="*{time}"
+                       th:placeholder="#{conference.time}"
+                       th:classappend="${#fields.hasErrors()} ? (${#fields.hasErrors('time')}? 'is-invalid':'is-valid') : ''">
+                <p class="error-message text-danger"
+                   th:each="error: ${#fields.errors('time')}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="text3" class="col-4 col-form-label" th:text="#{conference.number-participants}"></label>
+            <div class="col-8">
+                <input id="text3" name="text3" type="number" class="form-control" th:field="*{numberOfParticipants}"
+                       th:placeholder="#{conference.number-participants}"
+                       th:classappend="${#fields.hasErrors()} ? (${#fields.hasErrors('numberOfParticipants')}? 'is-invalid':'is-valid') : ''">
+                <p class="error-message text-danger"
+                   th:each="error: ${#fields.errors('numberOfParticipants')}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="text4" class="col-4 col-form-label" th:text="#{conference.venue}"></label>
+            <div class="col-8">
+                <input id="text4" name="text4" type="text" class="form-control" th:field="*{venue}"
+                       th:placeholder="#{conference.venue}"
+                       th:classappend="${#fields.hasErrors()} ? (${#fields.hasErrors('venue')}? 'is-invalid':'is-valid') : ''">
+                <p class="error-message text-danger"
+                   th:each="error: ${#fields.errors('venue')}"
+                   th:text="${error}"></p>
+            </div>
+        </div>
+
+        <div class="form-group row justify-content-center mt-5">
+            <div>
+                <button name="submit" type="submit" class="btn btn-primary" th:text="#{conference.create}"></button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    let count = 1;
+    $("#addRow").click(function () {
+        let html =
+            '    <div class="form-group row" id="inputFormRow">\n' +
+            '        <label for="report" class="col-4 col-form-label"></label>\n' +
+            '        <div class="col-8">\n' +
+            '          <div class="input-group">\n' +
+            '            <input id="report" type="text" class="form-control" name="topicOfReports[' + count + '].topic">\n' +
+            '            <div class="input-group-append">\n' +
+            '                <button id="removeRow" type="button" class="btn btn-danger">Delete</button>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div>';
+
+        count++
+
+        $('#newRow').append(html);
+    });
+
+    $(document).on('click', '#removeRow', function () {
+        $(this).closest('#inputFormRow').remove();
+    });
+</script>
+</body>
+</html>

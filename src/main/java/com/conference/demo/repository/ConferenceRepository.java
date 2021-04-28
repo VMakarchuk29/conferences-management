@@ -11,6 +11,8 @@ import java.util.List;
 
 @Repository
 public interface ConferenceRepository extends JpaRepository<Conference, Long> {
+    Conference save(Conference conference);
+
     List<Conference> findAll();
 
     Page<Conference> findAllByTimeOfHoldingAfter(LocalDateTime time, Pageable pageable);
