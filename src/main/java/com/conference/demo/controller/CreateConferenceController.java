@@ -37,7 +37,7 @@ public class CreateConferenceController {
     @PostMapping
     public String addConference(@ModelAttribute("dto") @Valid CreateConferenceDTO dto, BindingResult result) {
         if (result.hasErrors()) {
-            log.error("The add conference form has errors: " + dto);
+            log.error("Create conference form has errors: " + dto);
             return "add-conference";
         }
         System.out.println(createConferenceService.createConference(dto));

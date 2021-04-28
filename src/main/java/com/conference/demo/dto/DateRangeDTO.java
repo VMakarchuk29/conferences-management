@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class DateRangeDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate from;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate to;
 }

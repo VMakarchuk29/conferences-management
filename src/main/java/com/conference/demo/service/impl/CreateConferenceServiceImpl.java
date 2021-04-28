@@ -1,6 +1,7 @@
 package com.conference.demo.service.impl;
 
 import com.conference.demo.dto.CreateConferenceDTO;
+import com.conference.demo.dto.TopicOfReportDTO;
 import com.conference.demo.entities.Conference;
 import com.conference.demo.entities.ReportTopic;
 import com.conference.demo.repository.ConferenceRepository;
@@ -39,10 +40,10 @@ public class CreateConferenceServiceImpl implements CreateConferenceService {
 
     private Collection<ReportTopic> buildReportTopicList(CreateConferenceDTO dto) {
         List<ReportTopic> result = new ArrayList<>();
-        for (String topic : dto.getTopicOfReports()) {
+        for (TopicOfReportDTO topicOfReport : dto.getTopicOfReports()) {
             result.add(
                     ReportTopic.builder()
-                            .topic(topic)
+                            .topic(topicOfReport.getTopic())
                             .build()
             );
         }
