@@ -115,8 +115,9 @@
                     <h6 class="card-text" th:text="'Number people: ' + ${conference.numberOfParticipants}"></h6>
                     <h6 class="card-text" th:text="'Time of holding: ' + ${conference.timeOfHolding}"></h6>
                     <h6 class="card-text" th:text="'Venue: ' + ${conference.venue}"></h6>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
                     <a th:href="@{/conference-details/{id}(id = ${conference.id})}" class="btn btn-primary">Details</a>
+                    <a th:href="@{/update-conference/{id}(id = ${conference.id})}" class="btn btn-danger">Update</a>
+
                 </div>
             </div>
 
