@@ -1,6 +1,7 @@
 package com.conference.demo.service.impl;
 
 import com.conference.demo.entities.Conference;
+import com.conference.demo.exception.ConferenceNotFoundException;
 import com.conference.demo.exception.PageNotFoundException;
 import com.conference.demo.repository.ConferenceRepository;
 import com.conference.demo.service.ConferenceService;
@@ -41,6 +42,11 @@ public class ConferenceServiceImpl implements ConferenceService {
     public Page<Conference> findAllPastConference(Pageable pageable) throws PageNotFoundException {
         Page<Conference> pages = conferenceRepository.findAllByTimeOfHoldingBefore(LocalDateTime.now(), pageable);
         return checkIfPageExist(pageable, pages);
+    }
+
+    @Override
+    public Conference findById(long id) throws ConferenceNotFoundException {
+        return conferenceRepository.findById(id).orElseThrow(() -> new ConferenceNotFoundException("Not found conference with id = " + id));
     }
 
     private Page<Conference> checkIfPageExist(Pageable pageable, Page<Conference> pages) throws PageNotFoundException {

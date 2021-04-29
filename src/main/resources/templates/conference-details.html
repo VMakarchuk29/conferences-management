@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
+
+    <title>Conference details</title>
+</head>
+<body>
+<header th:insert="header.html :: nav"></header>
+<br>
+<br>
+<br>
+<div th:if="${found}" class="container">
+    <div class="row justify-content-center">
+        <h2>Conference not found</h2>
+    </div>
+</div>
+
+<div class="container" th:unless="${found}">
+    <div class="card">
+        <div class="card-header" th:text="${conference.topic}">
+            Featured
+        </div>
+        <div class="card-body">
+            <h4 class="card-title" th:text="'Topic of reports: '"></h4>
+            <div th:each="topic: ${conference.topicOfReports}">
+                <h5 th:text="${topic.topic}"></h5>
+            </div>
+            <h6 class="card-text" th:text="'Number people: ' + ${conference.numberOfParticipants}"></h6>
+            <h6 class="card-text" th:text="'Time of holding: ' + ${conference.timeOfHolding}"></h6>
+            <h6 class="card-text" th:text="'Venue: ' + ${conference.venue}"></h6>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <a href="#" class="btn btn-primary">Update venue</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
