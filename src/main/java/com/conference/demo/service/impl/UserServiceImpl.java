@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,6 +55,11 @@ public class UserServiceImpl implements UserService {
         user.setUserInfo(userInfo);
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAllSpeaker() {
+        return userRepository.findAllByRole(Role.SPEAKER);
     }
 
     private boolean emailExists(String email) {

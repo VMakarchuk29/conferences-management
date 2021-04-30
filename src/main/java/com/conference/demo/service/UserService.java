@@ -5,6 +5,7 @@ import com.conference.demo.entities.User;
 import com.conference.demo.exception.UserAlreadyExistException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
@@ -13,4 +14,6 @@ public interface UserService extends UserDetailsService {
     Optional<User> findByEmail(String email);
 
     User registerNewUserAccount(UserRegistrationDTO user) throws UserAlreadyExistException;
+
+    List<User> findAllSpeaker();
 }

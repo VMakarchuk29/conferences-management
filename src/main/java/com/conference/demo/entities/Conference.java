@@ -11,7 +11,8 @@ import java.util.List;
 @Table(name = "conference")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class Conference {
     @Id
@@ -19,9 +20,7 @@ public class Conference {
     private Long id;
     private String topic;
 
-    @Singular
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "conference_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "conference", cascade = CascadeType.ALL)
     private List<ReportTopic> topicOfReports = new ArrayList<>();
 
     private LocalDateTime timeOfHolding;

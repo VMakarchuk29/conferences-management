@@ -102,5 +102,11 @@
     </div>
 
 </div>
+<div class="container">
+    <div th:each="report: ${user.speakersReports}">
+        <h2 th:text="${report.id + ' ' + report.topic}"></h2>
+    </div>
+
+</div>
 </body>
 </html>
