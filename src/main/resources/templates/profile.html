@@ -102,11 +102,31 @@
     </div>
 
 </div>
-<div class="container">
-    <div th:each="report: ${user.speakersReports}">
-        <h2 th:text="${report.id + ' ' + report.topic}"></h2>
-    </div>
+<div th:if="${!user.speakersReports.isEmpty()}" class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Topic of report</th>
+            <th scope="col">Conference</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+        </tr>
+        </thead>
 
+        <tbody>
+        <tr th:each="report, state: ${user.speakersReports}">
+            <th scope="row" th:text="${state.count}"></th>
+            <td th:text="${report.topic}"></td>
+            <td>
+                <a th:href="@{/conference-details/{id}(id = ${report.conference.id})}"
+                   th:text="${report.conference.topic}"></a>
+            </td>
+            <td th:text="${report.conference.timeOfHolding.toLocalDate()}"></td>
+            <td th:text="${report.conference.timeOfHolding.toLocalTime()}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
