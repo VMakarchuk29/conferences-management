@@ -96,8 +96,27 @@
                     </div>
                     <div class="form-group">
                         <label class="m-1" for="sortBy">Order by:</label>
-                        <select id="sortBy" class="form-control">
-                            <option>Descendent</option>
+                        <select id="sortBy" class="form-control"
+                                onchange="location = location.protocol + '//' + location.host + location.pathname + this.value">
+                            <option th:selected="${conferences.getSort().isEmpty()}">---</option>
+
+                            <option th:selected="${conferences.getSort().toString().equals('topicCount: DESC')}"
+                                    value="?sort=topicCount,DESC">
+                                Кількістю доповідей: спадання
+                            </option>
+                            <option th:selected="${conferences.getSort().toString().equals('topicCount: ASC')}"
+                                    value="?sort=topicCount">
+                                Кількістю доповідей: зростання
+                            </option>
+
+                            <option th:selected="${conferences.getSort().toString().equals('numberOfParticipants: DESC')}"
+                                    value="?sort=numberOfParticipants,DESC">
+                                Кількістю учасників: спадання
+                            </option>
+                            <option th:selected="${conferences.getSort().toString().equals('numberOfParticipants: ASC')}"
+                                    value="?sort=numberOfParticipants">
+                                Кількістю учасників: зростання
+                            </option>
                         </select>
                     </div>
                 </form>
@@ -126,33 +145,35 @@
                 <ul class="pagination" th:with="start = ${start}, last = ${last}">
 
                     <li class="page-item" th:classappend="${conferences.getNumber() + 1} == 1 ? 'disabled': ''">
-                        <a class="page-link" th:href="@{${url}(size = ${conferences.getSize()}, page = 1)}"
+                        <a class="page-link"
+                           th:href="@{${url}(sort = ${conferences.getSort().toString().replaceAll(': ', ',')}, size = ${conferences.getSize()}, page = 1)}"
                            th:text="#{pagination.first-page}"></a>
                     </li>
 
                     <li class="page-item" th:classappend="*{!conferences.hasPrevious()} ? 'disabled': ''">
                         <a class="page-link"
-                           th:href="@{${url}(size = ${conferences.getSize()}, page = ${conferences.getNumber()})}">
+                           th:href="@{${url}(sort = ${conferences.getSort().toString().replaceAll(': ', ',')}, size = ${conferences.getSize()}, page = ${conferences.getNumber()})}">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
 
                     <li th:each="page : ${#numbers.sequence(start, last)}"
                         th:class="${page == conferences.getNumber() + 1} ? 'page-item  active' : 'page-item'">
-                        <a class="page-link" th:href="@{${url}(size = ${conferences.getSize()}, page = ${page})}"
+                        <a class="page-link"
+                           th:href="@{${url}(sort = ${conferences.getSort().toString().replaceAll(': ', ',')}, size = ${conferences.getSize()}, page = ${page})}"
                            th:text="${page}"></a>
                     </li>
 
                     <li class="page-item" th:classappend="*{!conferences.hasNext()} ? 'disabled': ''">
                         <a class="page-link"
-                           th:href="@{${url}(size = ${conferences.getSize()}, page = ${conferences.getNumber() + 2})}">
+                           th:href="@{${url}(sort = ${conferences.getSort().toString().replaceAll(': ', ',')}, size = ${conferences.getSize()}, page = ${conferences.getNumber() + 2})}">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
 
                     <li class="page-item" th:classappend="${conferences.getNumber() + 1 == last} ? 'disabled': ''">
                         <a class="page-link"
-                           th:href="@{${url}(size = ${conferences.getSize()}, page = ${conferences.totalPages})}"
+                           th:href="@{${url}(sort = ${conferences.getSort().toString().replaceAll(': ', ',')}, size = ${conferences.getSize()}, page = ${conferences.totalPages})}"
                            th:text="#{pagination.last-page}"></a>
                     </li>
                 </ul>
