@@ -1,16 +1,14 @@
 package com.conference.demo.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Builder
 @Entity
 @Table(name = "report_topic")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReportTopic {
@@ -19,4 +17,8 @@ public class ReportTopic {
     private Long id;
 
     private String topic;
+
+    @ManyToOne
+    @JoinColumn(name = "conference_id", referencedColumnName = "id")
+    private Conference conference;
 }

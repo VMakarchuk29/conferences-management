@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Data
@@ -14,4 +15,6 @@ import javax.validation.constraints.NotEmpty;
 public class TopicOfReportDTO {
     @NotEmpty(message = "{invalid.empty}")
     private String topic;
+    @NotNull
+    private long speakerId;
 }

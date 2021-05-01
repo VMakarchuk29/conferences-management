@@ -1,11 +1,10 @@
 package com.conference.demo.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Entity
@@ -29,4 +28,9 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private UserInfo userInfo;
+
+    @Singular
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "speaker_id", referencedColumnName = "id")
+    private List<ReportTopic> speakersReports = new ArrayList<>();
 }
