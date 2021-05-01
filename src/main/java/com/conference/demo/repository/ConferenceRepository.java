@@ -18,4 +18,6 @@ public interface ConferenceRepository extends JpaRepository<Conference, Long> {
     Page<Conference> findAllByTimeOfHoldingAfter(LocalDateTime time, Pageable pageable);
 
     Page<Conference> findAllByTimeOfHoldingBefore(LocalDateTime time, Pageable pageable);
+
+    Page<Conference> findByTimeOfHoldingBetween(LocalDateTime from, LocalDateTime to, Pageable pageable);
 }
