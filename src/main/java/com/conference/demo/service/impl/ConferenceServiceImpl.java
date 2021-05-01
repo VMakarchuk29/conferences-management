@@ -1,5 +1,6 @@
 package com.conference.demo.service.impl;
 
+import com.conference.demo.dto.DateRangeDTO;
 import com.conference.demo.entities.Conference;
 import com.conference.demo.exception.ConferenceNotFoundException;
 import com.conference.demo.exception.PageNotFoundException;
@@ -47,6 +48,11 @@ public class ConferenceServiceImpl implements ConferenceService {
     @Override
     public Conference findById(long id) throws ConferenceNotFoundException {
         return conferenceRepository.findById(id).orElseThrow(() -> new ConferenceNotFoundException("Not found conference with id = " + id));
+    }
+
+    @Override
+    public Page<Conference> findByDateBetween(DateRangeDTO range, Pageable pageable) {
+        return conferenceRepository.findByTimeOfHoldingBetween(range.getFrom().atStartOfDay(), range.getTo().atStartOfDay(), pageable);
     }
 
     private Page<Conference> checkIfPageExist(Pageable pageable, Page<Conference> pages) throws PageNotFoundException {

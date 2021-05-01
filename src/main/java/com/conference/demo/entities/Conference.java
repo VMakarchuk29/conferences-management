@@ -1,6 +1,7 @@
 package com.conference.demo.entities;
 
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,6 +23,9 @@ public class Conference {
 
     @OneToMany(mappedBy = "conference", cascade = CascadeType.ALL)
     private List<ReportTopic> topicOfReports = new ArrayList<>();
+
+    @Formula("(select count(*) from report_topic where report_topic.conference_id=id)")
+    private int topicCount;
 
     private LocalDateTime timeOfHolding;
     private int numberOfParticipants;

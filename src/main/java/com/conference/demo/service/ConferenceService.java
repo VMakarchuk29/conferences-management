@@ -1,5 +1,6 @@
 package com.conference.demo.service;
 
+import com.conference.demo.dto.DateRangeDTO;
 import com.conference.demo.entities.Conference;
 import com.conference.demo.exception.ConferenceNotFoundException;
 import com.conference.demo.exception.PageNotFoundException;
@@ -18,4 +19,6 @@ public interface ConferenceService {
     Page<Conference> findAllPastConference(Pageable pageable) throws PageNotFoundException;
 
     Conference findById(long id) throws ConferenceNotFoundException;
+
+    Page<Conference> findByDateBetween(DateRangeDTO range, Pageable pageable);
 }

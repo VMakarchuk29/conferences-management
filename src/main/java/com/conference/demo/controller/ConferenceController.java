@@ -46,12 +46,22 @@ public class ConferenceController {
         return "index";
     }
 
-    @GetMapping("date-range")
-    public String showAllConferencesInDateRange(@ModelAttribute @Valid DateRangeDTO range, BindingResult result) {
+    @GetMapping("/date-range")
+    public String showAllConferencesInDateRange(
+            @ModelAttribute @Valid DateRangeDTO range,
+            BindingResult result,
+            Model model,
+            Pageable pageable
+    ) {
         if (result.hasErrors()) {
             log.error("The date range form has errors: " + range);
-        } // TODO Implement this method
-        return "redirect:/conferences";
+            return showAllConferences(model, pageable);
+        }
+
+        String url = "/conferences/date-range?from=" + range.getFrom() + "&to=" + range.getTo();
+        addAttributes(model, conferenceService.findByDateBetween(range, pageable), url);
+
+        return "index";
     }
 
     @GetMapping("/upcoming-events")
