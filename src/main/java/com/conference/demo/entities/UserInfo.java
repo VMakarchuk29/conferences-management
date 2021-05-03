@@ -1,5 +1,6 @@
 package com.conference.demo.entities;
 
+import com.conference.demo.entities.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

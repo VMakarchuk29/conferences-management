@@ -36,6 +36,81 @@
             <a th:href="@{/update-conference/{id}(id = ${conference.id})}" class="btn btn-danger">Update</a>
         </div>
     </div>
+
+
+    <div class="accordion mt-5" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseOne"
+                            aria-expanded="false" aria-controls="collapseOne">
+                        Запропонувати свою доповідь
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group row">
+                            <label for="text" class="col-3 col-form-label">Text Field</label>
+                            <div class="col-9">
+                                <input id="text" name="text" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col text-center">
+                                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Запрпонувати себе як спікера на вільну тему
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" th:classappend="${param.speakerOfferSuccess} ? 'show' : ''"
+                 aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <form th:action="@{/speaker/offer-yourself/{id}(id = ${conference.id})}"
+                          th:object="${speakerOfferDTO}" method="post">
+
+                        <div th:if="${param.speakerOfferSuccess}">
+                            <div class="alert alert-info" th:text="'Вашу кандидатуру запропоновано'"></div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="select" class="col-3 col-form-label">Виберіть вільну тему</label>
+                            <div class="col-9">
+                                <select id="select" name="select" class="custom-select" th:field="*{reportTopicId}">
+                                    <option
+                                            th:each="topic: ${topicWithoutSpeaker}"
+                                            th:value="${topic.id}"
+                                            th:text="${topic.topic}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col text-center">
+                                <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>

@@ -21,4 +21,8 @@ public class ReportTopic {
     @ManyToOne
     @JoinColumn(name = "conference_id", referencedColumnName = "id")
     private Conference conference;
+
+    @ManyToOne
+    @JoinColumn(name = "speaker_id", referencedColumnName = "id")
+    private User speaker;
 }

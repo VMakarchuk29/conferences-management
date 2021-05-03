@@ -1,4 +1,4 @@
-package com.conference.demo.entities;
+package com.conference.demo.entities.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 

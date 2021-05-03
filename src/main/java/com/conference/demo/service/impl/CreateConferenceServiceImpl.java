@@ -38,7 +38,10 @@ public class CreateConferenceServiceImpl implements CreateConferenceService {
             ReportTopic topic = buildReportTopic(topicOfReport);
             reportTopics.add(topic);
 
-            speaker.ifPresent(user -> user.getSpeakersReports().add(topic));
+            speaker.ifPresent(user -> {
+                user.getSpeakersReports().add(topic);
+                topic.setSpeaker(user);
+            });
         }
         Conference conference = buildConference(dto);
 
