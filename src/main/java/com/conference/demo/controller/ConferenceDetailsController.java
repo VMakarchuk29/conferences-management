@@ -1,6 +1,7 @@
 package com.conference.demo.controller;
 
 import com.conference.demo.dto.SpeakerOfferDTO;
+import com.conference.demo.dto.TopicOfferDTO;
 import com.conference.demo.entities.Conference;
 import com.conference.demo.exception.ConferenceNotFoundException;
 import com.conference.demo.service.ConferenceService;
@@ -30,6 +31,11 @@ public class ConferenceDetailsController {
     @ModelAttribute
     private SpeakerOfferDTO getSpeakerOfferDTO() {
         return new SpeakerOfferDTO();
+    }
+
+    @ModelAttribute
+    private TopicOfferDTO getTopicOfferDTO() {
+        return new TopicOfferDTO();
     }
 
     @GetMapping("/{id}")

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TopicOfferRepository extends JpaRepository<TopicOffer, Long> {
+    boolean existsTopicOfferByConferenceIdAndSpeakerId(long conferenceId, long speakerId);
+
 }
