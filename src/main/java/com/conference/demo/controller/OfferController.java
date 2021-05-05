@@ -24,14 +24,26 @@ public class OfferController {
     }
 
     @GetMapping("/deny-speaker-offer/{id}")
-    public String denySpeakerOffer(@PathVariable("id") Long id) {
-        offerService.denySpeakerOfferById(id);
+    public String denySpeakerOffer(@PathVariable("id") Long speakerOfferId) {
+        offerService.denySpeakerOfferById(speakerOfferId);
         return "redirect:/offers";
     }
 
     @GetMapping("/accept-speaker-offer/{id}")
-    public String acceptSpeakerOffer(@PathVariable("id") Long id) {
-        offerService.acceptSpeakerOfferById(id);
+    public String acceptSpeakerOffer(@PathVariable("id") Long speakerOfferId) {
+        offerService.acceptSpeakerOfferById(speakerOfferId);
+        return "redirect:/offers";
+    }
+
+    @GetMapping("/deny-topic-offer/{id}")
+    public String denyTopicOffer(@PathVariable("id") Long topicOfferId) {
+        offerService.denyTopicOfferById(topicOfferId);
+        return "redirect:/offers";
+    }
+
+    @GetMapping("/accept-topic-offer/{id}")
+    public String acceptTopicOffer(@PathVariable("id") Long topicOfferId) {
+        offerService.acceptTopicOfferById(topicOfferId);
         return "redirect:/offers";
     }
 }

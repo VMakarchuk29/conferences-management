@@ -34,4 +34,7 @@ public class User {
 
     @OneToMany(mappedBy = "speaker", cascade = CascadeType.ALL)
     private List<SpeakerOffer> speakerOffers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "speaker", cascade = CascadeType.ALL)
+    private List<TopicOffer> topicOffers = new ArrayList<>();
 }

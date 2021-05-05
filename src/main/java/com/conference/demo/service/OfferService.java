@@ -2,6 +2,7 @@ package com.conference.demo.service;
 
 import com.conference.demo.dto.SpeakerOfferDTO;
 import com.conference.demo.dto.TopicOfferDTO;
+import com.conference.demo.entities.ReportTopic;
 import com.conference.demo.entities.SpeakerOffer;
 import com.conference.demo.entities.TopicOffer;
 import com.conference.demo.exception.OfferAlreadyExistException;
@@ -20,4 +21,8 @@ public interface OfferService {
     SpeakerOffer denySpeakerOfferById(Long id);
 
     SpeakerOffer acceptSpeakerOfferById(Long id);
+
+    ReportTopic denyTopicOfferById(Long id);
+
+    ReportTopic acceptTopicOfferById(Long id);
 }

@@ -28,7 +28,7 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            <table class="table mt-5" style="width: 1100px; margin-left: auto; margin-right: auto;">
+            <table class="table mt-5">
                 <thead class="thead">
                 <tr>
                     <th scope="col">#</th>
@@ -66,7 +66,45 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">2</div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <table class="table mt-5">
+                <thead class="thead">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Conference</th>
+                    <th scope="col">Report topic</th>
+                    <th scope="col">Speaker</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="offer, state : ${topicOffers}">
+                    <td th:scope="col" th:text="${state.count}"></td>
+                    <td>
+                        <a th:href="@{/conference-details/{id}(id = ${offer.conference.id})}"
+                           th:text="${offer.conference.topic}"></a>
+                    </td>
+                    <td th:text="${offer.topic}"></td>
+                    <td th:text="${offer.speaker.email}"></td>
+                    <td th:text="${offer.status}"></td>
+                    <td>
+                        <a th:if="${offer.status.toString() !='ACCEPT'}"
+                           th:href="@{/offers/accept-topic-offer/{id}(id = ${offer.id})}"
+                           class="btn btn-outline-success"
+                           th:text="'accept'">
+                        </a>
+                        <a th:if="${offer.status.toString() !='DENIED'}"
+                           th:href="@{/offers/deny-topic-offer/{id}(id = ${offer.id})}"
+                           class="btn btn-danger"
+                           th:text="'deny'">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">3</div>
     </div>
 </div>

@@ -22,9 +22,13 @@ public class TopicOffer {
 
     private String topic;
 
-    private long conferenceId;
+    @ManyToOne
+    @JoinColumn(name = "conference_id", referencedColumnName = "id")
+    private Conference conference;
 
-    private long speakerId;
+    @ManyToOne
+    @JoinColumn(name = "speaker_id", referencedColumnName = "id")
+    private User speaker;
 
     @Enumerated(EnumType.STRING)
     private OfferStatus status;
