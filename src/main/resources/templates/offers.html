@@ -18,16 +18,17 @@
 <div class="container justify-content-center">
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+            <a class="nav-item nav-link" th:classappend="${param.topic}?'':' active'" id="nav-home-tab"
+               data-toggle="tab" href="#nav-home" role="tab"
                aria-controls="nav-home" aria-selected="true">Speaker Offers</a>
-            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+            <a class="nav-item nav-link" th:classappend="${param.topic}?'active':''" id="nav-profile-tab"
+               data-toggle="tab" href="#nav-profile" role="tab"
                aria-controls="nav-profile" aria-selected="false">Topic Offers</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
-               aria-controls="nav-contact" aria-selected="false">Processed</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div th:class="${param.topic}?'tab-pane fade':'tab-pane fade show active'" id="nav-home" role="tabpanel"
+             aria-labelledby="nav-home-tab">
             <table class="table mt-5">
                 <thead class="thead">
                 <tr>
@@ -65,8 +66,37 @@
                 </tr>
                 </tbody>
             </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="*{!speakerOffers.hasPrevious()} ? 'disabled': ''">
+                        <a class="page-link"
+                           th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber()})}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page : ${#numbers.sequence(1, speakerOffers.getTotalPages())}"
+                        th:class="${page == speakerOffers.getNumber() + 1} ? 'page-item active' : 'page-item'">
+                        <a class="page-link"
+                           th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${page})}"
+                           th:text="${page}">
+                        </a>
+                    </li>
+
+                    <li class="page-item" th:classappend="*{!speakerOffers.hasNext()} ? 'disabled': ''">
+                        <a class="page-link"
+                           th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 2})}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div th:class="${param.topic}?'tab-pane fade show active':'tab-pane fade'" id="nav-profile" role="tabpanel"
+             aria-labelledby="nav-profile-tab">
             <table class="table mt-5">
                 <thead class="thead">
                 <tr>
@@ -104,8 +134,35 @@
                 </tr>
                 </tbody>
             </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="*{!topicOffers.hasPrevious()} ? 'disabled': ''">
+                        <a class="page-link"
+                           th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber()})}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="page : ${#numbers.sequence(1, topicOffers.getTotalPages())}"
+                        th:class="${page == topicOffers.getNumber() + 1} ? 'page-item active' : 'page-item'">
+                        <a class="page-link"
+                           th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${page})}"
+                           th:text="${page}">
+                        </a>
+                    </li>
+
+                    <li class="page-item" th:classappend="*{!topicOffers.hasNext()} ? 'disabled': ''">
+                        <a class="page-link"
+                           th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 2})}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">3</div>
     </div>
 </div>
 

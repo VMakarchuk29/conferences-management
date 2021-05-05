@@ -12,11 +12,12 @@ import com.conference.demo.repository.TopicOfferRepository;
 import com.conference.demo.service.OfferService;
 import com.conference.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -73,13 +74,13 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<SpeakerOffer> getSpeakerOffers() {
-        return speakerOfferRepository.findAll();
+    public Page<SpeakerOffer> getSpeakerOffers(Pageable pageable) {
+        return speakerOfferRepository.findAllByStatusIs(OfferStatus.IN_PROCESS, pageable);
     }
 
     @Override
-    public List<TopicOffer> getTopicOffers() {
-        return topicOfferRepository.findAll();
+    public Page<TopicOffer> getTopicOffers(Pageable pageable) {
+        return topicOfferRepository.findAllByStatusIs(OfferStatus.IN_PROCESS, pageable);
     }
 
     @Override

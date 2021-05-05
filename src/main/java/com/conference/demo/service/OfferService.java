@@ -6,17 +6,17 @@ import com.conference.demo.entities.ReportTopic;
 import com.conference.demo.entities.SpeakerOffer;
 import com.conference.demo.entities.TopicOffer;
 import com.conference.demo.exception.OfferAlreadyExistException;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface OfferService {
     SpeakerOffer saveSpeakerOffer(SpeakerOfferDTO dto, String email) throws OfferAlreadyExistException;
 
     TopicOffer saveTopicOffer(TopicOfferDTO dto, String email, Long conferenceId) throws OfferAlreadyExistException;
 
-    List<SpeakerOffer> getSpeakerOffers();
+    Page<SpeakerOffer> getSpeakerOffers(Pageable pageable);
 
-    List<TopicOffer> getTopicOffers();
+    Page<TopicOffer> getTopicOffers(Pageable pageable);
 
     SpeakerOffer denySpeakerOfferById(Long id);
 
