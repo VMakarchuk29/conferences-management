@@ -21,10 +21,8 @@ public class User {
     private String email;
     private String password;
 
-
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -33,4 +31,7 @@ public class User {
     @Singular
     @OneToMany(mappedBy = "speaker", cascade = CascadeType.ALL)
     private List<ReportTopic> speakersReports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "speaker", cascade = CascadeType.ALL)
+    private List<SpeakerOffer> speakerOffers = new ArrayList<>();
 }

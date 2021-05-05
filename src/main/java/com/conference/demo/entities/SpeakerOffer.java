@@ -20,9 +20,13 @@ public class SpeakerOffer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private long reportTopicId;
+    @ManyToOne
+    @JoinColumn(name = "report_topic_id", referencedColumnName = "id")
+    private ReportTopic reportTopic;
 
-    private long speakerId;
+    @ManyToOne
+    @JoinColumn(name = "speaker_id", referencedColumnName = "id")
+    private User speaker;
 
     @Enumerated(EnumType.STRING)
     private OfferStatus status;

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
+
+    <title>Offers</title>
+</head>
+<body>
+<header th:insert="header.html :: nav"></header>
+<br>
+<br>
+<br>
+<div class="container justify-content-center">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+               aria-controls="nav-home" aria-selected="true">Speaker Offers</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+               aria-controls="nav-profile" aria-selected="false">Topic Offers</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+               aria-controls="nav-contact" aria-selected="false">Processed</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <table class="table mt-5" style="width: 1100px; margin-left: auto; margin-right: auto;">
+                <thead class="thead">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Conference</th>
+                    <th scope="col">Report topic</th>
+                    <th scope="col">Speaker</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="offer, state : ${speakerOffers}">
+                    <td th:scope="col" th:text="${state.count}"></td>
+                    <td>
+                        <a th:href="@{/conference-details/{id}(id = ${offer.reportTopic.conference.id})}"
+                           th:text="${offer.reportTopic.conference.topic}"></a>
+                    </td>
+                    <td th:text="${offer.reportTopic.topic}"></td>
+                    <td th:text="${offer.speaker.email}"></td>
+                    <td th:text="${offer.status}"></td>
+                    <td>
+                        <a th:if="${offer.status.toString() !='ACCEPT'}"
+                           th:href="@{/offers/accept-speaker-offer/{id}(id = ${offer.id})}"
+                           class="btn btn-outline-success"
+                           th:text="'accept'">
+                        </a>
+                        <a th:if="${offer.status.toString() !='DENIED'}"
+                           th:href="@{/offers/deny-speaker-offer/{id}(id = ${offer.id})}"
+                           class="btn btn-danger"
+                           th:text="'deny'">
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">2</div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">3</div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -36,7 +36,7 @@ public class SpeakerController {
         try {
             log.info(String.format("Speaker offer by User '%s' saved with id = %d",
                     principal.getName(),
-                    offerService.saveSpeakerOffer(dto, principal.getName()).getSpeakerId()));
+                    offerService.saveSpeakerOffer(dto, principal.getName()).getSpeaker().getId()));
         } catch (OfferAlreadyExistException e) {
             log.error(e.getMessage());
             return String.format("redirect:/conference-details/%d?speakerOfferError", conference_id);

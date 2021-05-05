@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class SpeakerOfferDTO {
 
-    private int reportTopicId;
+    private long reportTopicId;
 }
