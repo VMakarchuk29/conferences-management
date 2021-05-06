@@ -1,5 +1,6 @@
 package com.conference.demo.entities;
 
+import com.conference.demo.entities.enums.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,17 +21,20 @@ public class User {
     private String email;
     private String password;
 
-
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private UserInfo userInfo;
 
     @Singular
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "speaker_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "speaker", cascade = CascadeType.ALL)
     private List<ReportTopic> speakersReports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "speaker", cascade = CascadeType.ALL)
+    private List<SpeakerOffer> speakerOffers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "speaker", cascade = CascadeType.ALL)
+    private List<TopicOffer> topicOffers = new ArrayList<>();
 }

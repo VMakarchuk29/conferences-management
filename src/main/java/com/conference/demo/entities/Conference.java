@@ -30,4 +30,7 @@ public class Conference {
     private LocalDateTime timeOfHolding;
     private int numberOfParticipants;
     private String venue;
+
+    @OneToMany(mappedBy = "conference", cascade = CascadeType.ALL)
+    private List<TopicOffer> topicOffers = new ArrayList<>();
 }

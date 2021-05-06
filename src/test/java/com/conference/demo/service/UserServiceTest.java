@@ -1,10 +1,10 @@
 package com.conference.demo.service;
 
 import com.conference.demo.dto.UserRegistrationDTO;
-import com.conference.demo.entities.Gender;
-import com.conference.demo.entities.Role;
 import com.conference.demo.entities.User;
 import com.conference.demo.entities.UserInfo;
+import com.conference.demo.entities.enums.Gender;
+import com.conference.demo.entities.enums.Role;
 import com.conference.demo.exception.UserAlreadyExistException;
 import com.conference.demo.repository.UserRepository;
 import org.junit.jupiter.api.Test;

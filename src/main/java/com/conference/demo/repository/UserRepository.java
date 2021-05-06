@@ -1,7 +1,7 @@
 package com.conference.demo.repository;
 
-import com.conference.demo.entities.Role;
 import com.conference.demo.entities.User;
+import com.conference.demo.entities.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,19 +1,21 @@
 package com.conference.demo.entities;
 
-import lombok.*;
+import com.conference.demo.entities.enums.OfferStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
-@Builder
-@Entity
-@Table(name = "report_topic")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReportTopic {
+@Builder
+@Entity
+@Table(name = "topic_offer")
+public class TopicOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,6 +30,9 @@ public class ReportTopic {
     @JoinColumn(name = "speaker_id", referencedColumnName = "id")
     private User speaker;
 
-    @OneToMany(mappedBy = "reportTopic", cascade = CascadeType.ALL)
-    private List<SpeakerOffer> speakerOffers = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private OfferStatus status;
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 }
