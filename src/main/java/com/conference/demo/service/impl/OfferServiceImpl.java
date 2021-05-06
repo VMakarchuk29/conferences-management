@@ -152,6 +152,16 @@ public class OfferServiceImpl implements OfferService {
         return reportTopicRepository.save(reportTopic);
     }
 
+    @Override
+    public Page<SpeakerOffer> getProcessedSpeakerOffers(Pageable pageable) {
+        return speakerOfferRepository.findAllByStatusIsNot(OfferStatus.IN_PROCESS, pageable);
+    }
+
+    @Override
+    public Page<TopicOffer> getProcessedTopicOffers(Pageable pageable) {
+        return topicOfferRepository.findAllByStatusIsNot(OfferStatus.IN_PROCESS, pageable);
+    }
+
     private TopicOffer buildTopicOffer(TopicOfferDTO dto, User user, Conference conference) {
         return TopicOffer.builder()
                 .topic(dto.getTopic())

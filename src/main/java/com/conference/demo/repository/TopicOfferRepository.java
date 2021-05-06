@@ -13,4 +13,5 @@ public interface TopicOfferRepository extends JpaRepository<TopicOffer, Long> {
 
     Page<TopicOffer> findAllByStatusIs(OfferStatus status, Pageable pageable);
 
+    Page<TopicOffer> findAllByStatusIsNot(OfferStatus status, Pageable pageable);
 }

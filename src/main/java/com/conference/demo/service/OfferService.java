@@ -25,4 +25,8 @@ public interface OfferService {
     ReportTopic denyTopicOfferById(Long id);
 
     ReportTopic acceptTopicOfferById(Long id);
+
+    Page<SpeakerOffer> getProcessedSpeakerOffers(Pageable pageable);
+
+    Page<TopicOffer> getProcessedTopicOffers(Pageable pageable);
 }

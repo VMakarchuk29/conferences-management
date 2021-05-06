@@ -18,4 +18,6 @@ public interface SpeakerOfferRepository extends JpaRepository<SpeakerOffer, Long
 
     Page<SpeakerOffer> findAllByStatusIs(OfferStatus status, Pageable pageable);
 
+    Page<SpeakerOffer> findAllByStatusIsNot(OfferStatus status, Pageable pageable);
+
 }
