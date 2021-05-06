@@ -33,4 +33,11 @@ public class Conference {
 
     @OneToMany(mappedBy = "conference", cascade = CascadeType.ALL)
     private List<TopicOffer> topicOffers = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "selected_conferences",
+            joinColumns = @JoinColumn(name = "conference_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    List<User> registeredUsers = new ArrayList<>();
 }

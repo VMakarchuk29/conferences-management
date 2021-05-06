@@ -21,6 +21,12 @@
 </div>
 
 <div class="container" th:unless="${found}">
+    <div th:if="${param.successReg}">
+        <div class="alert alert-info">Register success</div>
+    </div>
+    <div th:if="${param.errorReg}">
+        <div class="alert alert-danger">Register error</div>
+    </div>
     <div class="card">
         <div class="card-header" th:text="${conference.topic}">
             Featured
@@ -34,6 +40,7 @@
             <h6 class="card-text" th:text="'Time of holding: ' + ${conference.timeOfHolding}"></h6>
             <h6 class="card-text" th:text="'Venue: ' + ${conference.venue}"></h6>
             <a th:href="@{/update-conference/{id}(id = ${conference.id})}" class="btn btn-danger">Update</a>
+            <a th:href="@{/conference/registration/{id}(id = ${conference.id})}" class="btn btn-danger">Register</a>
         </div>
     </div>
 
