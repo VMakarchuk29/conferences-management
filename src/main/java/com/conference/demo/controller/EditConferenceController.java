@@ -7,6 +7,7 @@ import com.conference.demo.service.ConferenceService;
 import com.conference.demo.service.EditConferenceService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("update-conference")
+@PreAuthorize("hasAuthority('MODERATOR')")
 public class EditConferenceController {
     private static final Logger log = Logger.getLogger(EditConferenceController.class);
 

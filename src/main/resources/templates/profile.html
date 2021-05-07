@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
 <head>
     <meta charset="UTF-8">
 
@@ -102,7 +104,8 @@
     </div>
 
 </div>
-<div th:if="${!user.speakersReports.isEmpty()}" class="container">
+<div sec:authorize="hasAuthority('SPEAKER')" th:if="${!user.speakersReports.isEmpty()}" class="container">
+
     <table class="table">
         <thead>
         <tr>

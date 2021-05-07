@@ -5,6 +5,7 @@ import com.conference.demo.service.CreateConferenceService;
 import com.conference.demo.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/add-conference")
+@PreAuthorize("hasAuthority('MODERATOR')")
 public class CreateConferenceController {
     private static final Logger log = Logger.getLogger(CreateConferenceController.class);
     private final CreateConferenceService createConferenceService;
