@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
 <head>
     <meta charset="UTF-8">
 
@@ -136,7 +138,8 @@
                     <h6 class="card-text" th:text="'Time of holding: ' + ${conference.timeOfHolding}"></h6>
                     <h6 class="card-text" th:text="'Venue: ' + ${conference.venue}"></h6>
                     <a th:href="@{/conference-details/{id}(id = ${conference.id})}" class="btn btn-primary">Details</a>
-                    <a th:href="@{/update-conference/{id}(id = ${conference.id})}" class="btn btn-danger">Update</a>
+                    <a sec:authorize="hasAuthority('MODERATOR')"
+                       th:href="@{/update-conference/{id}(id = ${conference.id})}" class="btn btn-danger">Update</a>
 
                 </div>
             </div>

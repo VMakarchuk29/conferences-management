@@ -6,6 +6,7 @@ import com.conference.demo.exception.OfferAlreadyExistException;
 import com.conference.demo.service.OfferService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/speaker")
+@PreAuthorize("hasAuthority('SPEAKER')")
 public class SpeakerController {
     private static final Logger log = Logger.getLogger(SpeakerController.class);
     private final OfferService offerService;
