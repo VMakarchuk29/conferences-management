@@ -1,5 +1,6 @@
 package com.conference.demo.service.impl;
 
+import com.conference.demo.dto.SpeakerDTO;
 import com.conference.demo.dto.UserRegistrationDTO;
 import com.conference.demo.entities.User;
 import com.conference.demo.entities.UserInfo;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,6 +62,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllSpeaker() {
         return userRepository.findAllByRole(Role.SPEAKER);
+    }
+
+    @Override
+    public List<SpeakerDTO> findAllSpeakerDTO() { //TODO remaster (add builder)
+        List<User> speakers = userRepository.findAllByRole(Role.SPEAKER);
+        List<SpeakerDTO> speakerDTO = speakers.stream().map(s -> {
+            SpeakerDTO speaker = new SpeakerDTO();
+            speaker.setSpeakerId(Math.toIntExact(s.getId()));
+            speaker.setFirstName(s.getUserInfo().getFirstName());
+            speaker.setLastName(s.getUserInfo().getLastName());
+            return speaker;
+        }).collect(Collectors.toList());
+        return speakerDTO;
     }
 
     private boolean emailExists(String email) {

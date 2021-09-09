@@ -1,5 +1,6 @@
 package com.conference.demo.service;
 
+import com.conference.demo.dto.SpeakerDTO;
 import com.conference.demo.dto.UserRegistrationDTO;
 import com.conference.demo.entities.User;
 import com.conference.demo.exception.UserAlreadyExistException;
@@ -16,4 +17,6 @@ public interface UserService extends UserDetailsService {
     User registerNewUserAccount(UserRegistrationDTO user) throws UserAlreadyExistException;
 
     List<User> findAllSpeaker();
+
+    List<SpeakerDTO> findAllSpeakerDTO();
 }

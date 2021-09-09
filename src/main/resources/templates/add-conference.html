@@ -142,12 +142,28 @@
             </div>
         </div>
     </form>
-
+    <div id="test"></div>
 </div>
 
 <script type="text/javascript">
     let count = 1;
     $("#addRow").click(function () {
+
+        $.getJSON("http://localhost:8080/speaker", function (data) {
+            console.log(data)
+
+            let re = '<select class="form-control">\n'
+
+            $.each(data.valueOf(), function (index, element) {
+                re += '<option text="' + element.firstName + '">'+element.firstName+'</option>'
+            })
+            re += '</select>'
+            console.log(re)
+
+            $('#test').append(re);
+        });//TODO remaster this shit
+
+
         let html =
             '    <div class="form-group row" id="inputFormRow">\n' +
             '        <label for="report" class="col-4 col-form-label"></label>\n' +
