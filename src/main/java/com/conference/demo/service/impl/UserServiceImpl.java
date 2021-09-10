@@ -65,16 +65,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SpeakerDTO> findAllSpeakerDTO() { //TODO remaster (add builder)
+    public List<SpeakerDTO> findAllSpeakerDTO() {
         List<User> speakers = userRepository.findAllByRole(Role.SPEAKER);
-        List<SpeakerDTO> speakerDTO = speakers.stream().map(s -> {
-            SpeakerDTO speaker = new SpeakerDTO();
-            speaker.setSpeakerId(Math.toIntExact(s.getId()));
-            speaker.setFirstName(s.getUserInfo().getFirstName());
-            speaker.setLastName(s.getUserInfo().getLastName());
-            return speaker;
-        }).collect(Collectors.toList());
-        return speakerDTO;
+        return speakers.stream().map(s ->
+                SpeakerDTO.builder()
+                        .speakerId(s.getId())
+                        .firstName(s.getUserInfo().getFirstName())
+                        .lastName(s.getUserInfo().getLastName())
+                        .build()).collect(Collectors.toList());
     }
 
     private boolean emailExists(String email) {

@@ -1,10 +1,12 @@
 package com.conference.demo.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class SpeakerDTO {
-    private int speakerId;
+    private long speakerId;
     private String firstName;
     private String lastName;
 }
