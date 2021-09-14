@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" type="text/css"  href="/css/style.css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
+    <style>
+        .row form-group {
+            margin-block-end: 20px;
+        }
+
+        body {
+            background: -webkit-linear-gradient(left, darkgray, gray);
+        }
+
+        .emp-profile {
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            border-radius: 0.5rem;
+            background: #fff;
+        }
+
+        .profile-img {
+            text-align: center;
+        }
+
+        .profile-img img {
+            width: 70%;
+            height: 100%;
+        }
+
+        .profile-img .file {
+            position: relative;
+            overflow: hidden;
+            margin-top: -20%;
+            width: 70%;
+            border: none;
+            border-radius: 0;
+            font-size: 15px;
+            background: #212529b8;
+        }
+
+        .profile-img .file input {
+            position: absolute;
+            opacity: 0;
+            right: 0;
+            top: 0;
+        }
+
+        .profile-head h5 {
+            color: #333;
+        }
+
+        .profile-head h6 {
+            color: #0062cc;
+        }
+
+        .proile-rating span {
+            color: #495057;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .profile-head {
+            margin-bottom: 5%;
+        }
+
+        .profile-head {
+            font-weight: 600;
+            border: none;
+        }
+
+        .profile-head {
+            border: none;
+            border-bottom: 2px solid #0062cc;
+        }
+
+        .profile-work p {
+            font-size: 12px;
+            color: #818182;
+            font-weight: 600;
+            margin-top: 10%;
+        }
+
+        .profile-work a {
+            text-decoration: none;
+            color: #495057;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .profile-work ul {
+            list-style: none;
+        }
+
+        .profile-tab label {
+            font-weight: 600;
+        }
+
+        .profile-tab p {
+            font-weight: 600;
+            color: #0062cc;
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body>
+<header th:insert="header.html :: nav"></header>
+<br/>
+<br/>
+
+<div class="container emp-profile">
+    <form method="post" enctype="multipart/form-data">
+        <div class="row ">
+            <div class="col-md-4">
+                <div class="profile-img">
+                    <img th:src="@{${'/images/profile/' + profileDto.filename}}" alt=""/>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="profile-head">
+                    <div class="row">
+                        <div class="col">
+                            <h5 th:text="${profileDto.firstName} + ' ' + ${profileDto.lastName}"></h5>
+                        </div>
+                        <div class="col-md-auto">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-secondary">Save</button>
+                            </div>
+                        </div>
+                        <div class="col col-lg-2">
+                            <a th:href="@{/profile}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </div>
+
+
+                    <br>
+                    <div class="container-fluid">
+                        <form role="form" th:action="@{/edit}"
+                              th:object="${profileDto}" method="post" enctype="multipart/form-data">
+                            <div class="row form-group input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Change profile image</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="file" id="inputGroupFile01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-lg-3 control-label">First name:</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" th:field="*{firstName}" type="text">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-lg-3 control-label">Last Name:</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" th:field="*{lastName}" type="text">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-lg-3 control-label">User Name:</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" th:field="*{userName}" type="text">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-lg-3 control-label">Email:</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" th:field="*{email}" type="text">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-lg-3 control-label">Birthday:</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" th:field="*{birthday}" type="date">
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-lg-3 control-label">Phone number:</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" th:field="*{phoneNumber}" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label>Gender</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row form-group">
+                                            <div class="col-sm-4">
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="femaleRadio" th:field="*{gender}"
+                                                           value="Female">Female
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="radio-inline">
+                                                    <input type="radio" id="maleRadio" th:field="*{gender}"
+                                                           value="Male">Male
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
