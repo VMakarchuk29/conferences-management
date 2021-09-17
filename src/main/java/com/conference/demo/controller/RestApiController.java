@@ -1,7 +1,6 @@
 package com.conference.demo.controller;
 
 import com.conference.demo.dto.SpeakerDTO;
-import com.conference.demo.entities.User;
 import com.conference.demo.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class Rest {
+public class RestApiController {
     UserService userService;
 
-    public Rest(UserService userService) {
+    public RestApiController(UserService userService) {
         this.userService = userService;
     }
 

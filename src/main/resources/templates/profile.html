@@ -7,13 +7,11 @@
 
     <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
-    <link rel="stylesheet" type="text/css"  href="/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
     <title>Profile</title>
     <style>
-        body {
-            background: -webkit-linear-gradient(left, darkgray, gray);
-        }
+
 
         .emp-profile {
             padding: 3%;
@@ -56,22 +54,6 @@
 
         .profile-head h6 {
             color: #0062cc;
-        }
-
-        .profile-edit-btn {
-            border: none;
-            border-radius: 1.5rem;
-            width: 70%;
-            padding: 2%;
-            font-weight: 600;
-            color: #6c757d;
-            cursor: pointer;
-        }
-
-        .proile-rating {
-            font-size: 12px;
-            color: #818182;
-            margin-top: 5%;
         }
 
         .proile-rating span {
@@ -148,15 +130,10 @@
                     <h5 th:text="${user.userInfo.firstName} + ' ' + ${user.userInfo.lastName}"></h5>
                     <br>
                     <br>
-                    <br>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                aria-controls="home" aria-selected="true">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                               aria-controls="profile" aria-selected="false">Order</a>
                         </li>
                     </ul>
                 </div>
@@ -229,173 +206,54 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <!--<div class="row">
-                          <div class="col-md-6">
-                            <label>Experience</label>
-                          </div>
-                          <div class="col-md-6">
-                            <p>Expert</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>Hourly Rate</label>
-                          </div>
-                          <div class="col-md-6">
-                            <p>10$/hr</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>Total Projects</label>
-                          </div>
-                          <div class="col-md-6">
-                            <p>230</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>English Level</label>
-                          </div>
-                          <div class="col-md-6">
-                            <p>Expert</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <label>Availability</label>
-                          </div>
-                          <div class="col-md-6">
-                            <p>6 months</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-12">
-                            <label>Your Bio</label><br/>
-                            <p>Your detail description</p>
-                          </div>
-                        </div>-->
-                    </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
-<!--
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="text-center">
-                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
-                     alt="avatar">
-                <input type="file" class="text-center center-block file-upload">
+
+<div sec:authorize="hasAuthority('SPEAKER')" th:if="${!user.speakersReports.isEmpty()}" class="container emp-profile">
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Список ваших заходів
+                    </button>
+                </h2>
             </div>
-        </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Topic of report</th>
+                            <th scope="col">Conference</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                        </tr>
+                        </thead>
 
-        <div class="col-sm-9">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                       aria-controls="profile" aria-selected="true">Profile</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                       aria-controls="home" aria-selected="false">Home</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                       aria-controls="contact" aria-selected="false">Contact</a>
-                </li>
-            </ul>
-
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="container m-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label th:text="#{profile.name}">Name</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p th:text="${user.userInfo.firstName} + ' ' + ${user.userInfo.lastName}"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label th:text="#{profile.username}"></label>
-                            </div>
-                            <div class="col-md-6">
-                                <p th:text="${user.userName}"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label th:text="#{profile.email}"></label>
-                            </div>
-                            <div class="col-md-6">
-                                <p th:text="${user.email}"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label th:text="#{profile.date-of-birth}"></label>
-                            </div>
-                            <div class="col-md-6">
-                                <p th:text="${user.userInfo.birthday}"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label th:text="#{profile.phone-number}"></label>
-                            </div>
-                            <div class="col-md-6">
-                                <p th:text="${user.userInfo.phoneNumber}"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label th:text="#{profile.gender}"></label>
-                            </div>
-                            <div class="col-md-6">
-                                <p th:text="${user.userInfo.gender} == 'MALE' ? #{profile.male} : #{profile.female}"></p>
-                            </div>
-                        </div>
-                    </div>
+                        <tbody>
+                        <tr th:each="report, state: ${user.speakersReports}">
+                            <th scope="row" th:text="${state.count}"></th>
+                            <td th:text="${report.topic}"></td>
+                            <td>
+                                <a th:href="@{/conference-details/{id}(id = ${report.conference.id})}"
+                                   th:text="${report.conference.topic}"></a>
+                            </td>
+                            <td th:text="${report.conference.timeOfHolding.toLocalDate()}"></td>
+                            <td th:text="${report.conference.timeOfHolding.toLocalTime()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
             </div>
         </div>
     </div>
 
-</div>
--->
-<div sec:authorize="hasAuthority('SPEAKER')" th:if="${!user.speakersReports.isEmpty()}" class="container">
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Topic of report</th>
-            <th scope="col">Conference</th>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr th:each="report, state: ${user.speakersReports}">
-            <th scope="row" th:text="${state.count}"></th>
-            <td th:text="${report.topic}"></td>
-            <td>
-                <a th:href="@{/conference-details/{id}(id = ${report.conference.id})}"
-                   th:text="${report.conference.topic}"></a>
-            </td>
-            <td th:text="${report.conference.timeOfHolding.toLocalDate()}"></td>
-            <td th:text="${report.conference.timeOfHolding.toLocalTime()}"></td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>

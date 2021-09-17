@@ -54,11 +54,17 @@
                     <a class="nav-link" th:href="@{/login}" th:text="#{header.login}"><span
                             class="glyphicon glyphicon-log-in"></span></a>
                 </li>
-                <li sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/profile}" th:text="#{header.profile}"></a>
-                </li>
-                <li sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/logout}" th:text="#{header.logout}"></a>
+
+                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span sec:authentication="name"/>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/profile}" th:text="#{header.profile}">Profile</a>
+                        <a class="dropdown-item" th:href="@{/profile/edit}"><i class="bi bi-person-circle"></i>Edit Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/logout}" th:text="#{header.logout}">Logout</a>
+                    </div>
                 </li>
             </ul>
         </div>
