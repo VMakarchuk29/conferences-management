@@ -1,10 +1,7 @@
 package com.conference.demo.entities;
 
 import com.conference.demo.entities.enums.Gender;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,7 +10,9 @@ import java.time.LocalDateTime;
 
 @Builder
 @Entity
-@Data
+//@Data
+@Getter//todo
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "account_info")
@@ -26,6 +25,7 @@ public class UserInfo {
     private String lastName;
     private LocalDate birthday;
     private String phoneNumber;
+    private String filename;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
