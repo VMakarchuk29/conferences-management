@@ -7,15 +7,21 @@
     <script th:src="@{/webjars/bootstrap/4.6.0/js/bootstrap.min.js}"></script>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css"  href="/css/style.css"/>
-
+    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+    <style>
+        .container {
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            border-radius: 0.5rem;
+            background: #fff;
+        }
+    </style>
     <title>Offers</title>
 </head>
 <body>
 <header th:insert="header.html :: nav"></header>
-<br>
-<br>
-<br>
+
 <div class="container justify-content-center">
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -30,139 +36,147 @@
     <div class="tab-content" id="nav-tabContent">
         <div th:class="${param.topic}?'tab-pane fade':'tab-pane fade show active'" id="nav-home" role="tabpanel"
              aria-labelledby="nav-home-tab">
-            <table class="table mt-5">
-                <thead class="thead">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Conference</th>
-                    <th scope="col">Report topic</th>
-                    <th scope="col">Speaker</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
+            <div class="alert alert-info mt-4" th:if="${speakerOffers.isEmpty()}">
+                Немає пропозицій на вільні теми
+            </div>
+            <div th:if="${!speakerOffers.isEmpty()}">
+                <table class="table mt-5">
+                    <thead class="thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Conference</th>
+                        <th scope="col">Report topic</th>
+                        <th scope="col">Speaker</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
 
-                <tbody>
-                <tr th:each="offer, state : ${speakerOffers}">
-                    <td th:scope="col" th:text="${state.count}"></td>
-                    <td>
-                        <a th:href="@{/conference-details/{id}(id = ${offer.reportTopic.conference.id})}"
-                           th:text="${offer.reportTopic.conference.topic}"></a>
-                    </td>
-                    <td th:text="${offer.reportTopic.topic}"></td>
-                    <td th:text="${offer.speaker.email}"></td>
-                    <td th:text="${offer.status}"></td>
-                    <td>
-                        <a th:if="${offer.status.toString() !='ACCEPT'}"
-                           th:href="@{/offers/accept-speaker-offer/{id}(id = ${offer.id})}"
-                           class="btn btn-outline-success"
-                           th:text="'accept'">
-                        </a>
-                        <a th:if="${offer.status.toString() !='DENIED'}"
-                           th:href="@{/offers/deny-speaker-offer/{id}(id = ${offer.id})}"
-                           class="btn btn-danger"
-                           th:text="'deny'">
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    <tbody>
+                    <tr th:each="offer, state : ${speakerOffers}">
+                        <td th:scope="col" th:text="${state.count}"></td>
+                        <td>
+                            <a th:href="@{/conference-details/{id}(id = ${offer.reportTopic.conference.id})}"
+                               th:text="${offer.reportTopic.conference.topic}"></a>
+                        </td>
+                        <td th:text="${offer.reportTopic.topic}"></td>
+                        <td th:text="${offer.speaker.email}"></td>
+                        <td th:text="${offer.status}"></td>
+                        <td>
+                            <a th:if="${offer.status.toString() !='ACCEPT'}"
+                               th:href="@{/offers/accept-speaker-offer/{id}(id = ${offer.id})}"
+                               class="btn btn-outline-success"
+                               th:text="'accept'">
+                            </a>
+                            <a th:if="${offer.status.toString() !='DENIED'}"
+                               th:href="@{/offers/deny-speaker-offer/{id}(id = ${offer.id})}"
+                               class="btn btn-danger"
+                               th:text="'deny'">
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="*{!speakerOffers.hasPrevious()} ? 'disabled': ''">
+                            <a class="page-link"
+                               th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber()})}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" th:classappend="*{!speakerOffers.hasPrevious()} ? 'disabled': ''">
-                        <a class="page-link"
-                           th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber()})}"
-                           aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
+                        <li th:each="page : ${#numbers.sequence(1, speakerOffers.getTotalPages())}"
+                            th:class="${page == speakerOffers.getNumber() + 1} ? 'page-item active' : 'page-item'">
+                            <a class="page-link"
+                               th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${page})}"
+                               th:text="${page}">
+                            </a>
+                        </li>
 
-                    <li th:each="page : ${#numbers.sequence(1, speakerOffers.getTotalPages())}"
-                        th:class="${page == speakerOffers.getNumber() + 1} ? 'page-item active' : 'page-item'">
-                        <a class="page-link"
-                           th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${page})}"
-                           th:text="${page}">
-                        </a>
-                    </li>
-
-                    <li class="page-item" th:classappend="*{!speakerOffers.hasNext()} ? 'disabled': ''">
-                        <a class="page-link"
-                           th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 2})}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                        <li class="page-item" th:classappend="*{!speakerOffers.hasNext()} ? 'disabled': ''">
+                            <a class="page-link"
+                               th:href="@{/offers(p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 1}, p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 2})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
         <div th:class="${param.topic}?'tab-pane fade show active':'tab-pane fade'" id="nav-profile" role="tabpanel"
              aria-labelledby="nav-profile-tab">
-            <table class="table mt-5">
-                <thead class="thead">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Conference</th>
-                    <th scope="col">Report topic</th>
-                    <th scope="col">Speaker</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
+            <div class="alert alert-info mt-4" th:if="${topicOffers.isEmpty()}">
+                Немає пропозицій своїх тем
+            </div>
+            <div th:if="${!topicOffers.isEmpty()}">
+                <table class="table mt-5">
+                    <thead class="thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Conference</th>
+                        <th scope="col">Report topic</th>
+                        <th scope="col">Speaker</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
 
-                <tbody>
-                <tr th:each="offer, state : ${topicOffers}">
-                    <td th:scope="col" th:text="${state.count}"></td>
-                    <td>
-                        <a th:href="@{/conference-details/{id}(id = ${offer.conference.id})}"
-                           th:text="${offer.conference.topic}"></a>
-                    </td>
-                    <td th:text="${offer.topic}"></td>
-                    <td th:text="${offer.speaker.email}"></td>
-                    <td th:text="${offer.status}"></td>
-                    <td>
-                        <a th:if="${offer.status.toString() !='ACCEPT'}"
-                           th:href="@{/offers/accept-topic-offer/{id}(id = ${offer.id})}"
-                           class="btn btn-outline-success"
-                           th:text="'accept'">
-                        </a>
-                        <a th:if="${offer.status.toString() !='DENIED'}"
-                           th:href="@{/offers/deny-topic-offer/{id}(id = ${offer.id})}"
-                           class="btn btn-danger"
-                           th:text="'deny'">
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    <tbody>
+                    <tr th:each="offer, state : ${topicOffers}">
+                        <td th:scope="col" th:text="${state.count}"></td>
+                        <td>
+                            <a th:href="@{/conference-details/{id}(id = ${offer.conference.id})}"
+                               th:text="${offer.conference.topic}"></a>
+                        </td>
+                        <td th:text="${offer.topic}"></td>
+                        <td th:text="${offer.speaker.email}"></td>
+                        <td th:text="${offer.status}"></td>
+                        <td>
+                            <a th:if="${offer.status.toString() !='ACCEPT'}"
+                               th:href="@{/offers/accept-topic-offer/{id}(id = ${offer.id})}"
+                               class="btn btn-outline-success"
+                               th:text="'accept'">
+                            </a>
+                            <a th:if="${offer.status.toString() !='DENIED'}"
+                               th:href="@{/offers/deny-topic-offer/{id}(id = ${offer.id})}"
+                               class="btn btn-danger"
+                               th:text="'deny'">
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="*{!topicOffers.hasPrevious()} ? 'disabled': ''">
+                            <a class="page-link"
+                               th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber()})}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item" th:classappend="*{!topicOffers.hasPrevious()} ? 'disabled': ''">
-                        <a class="page-link"
-                           th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber()})}"
-                           aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
+                        <li th:each="page : ${#numbers.sequence(1, topicOffers.getTotalPages())}"
+                            th:class="${page == topicOffers.getNumber() + 1} ? 'page-item active' : 'page-item'">
+                            <a class="page-link"
+                               th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${page})}"
+                               th:text="${page}">
+                            </a>
+                        </li>
 
-                    <li th:each="page : ${#numbers.sequence(1, topicOffers.getTotalPages())}"
-                        th:class="${page == topicOffers.getNumber() + 1} ? 'page-item active' : 'page-item'">
-                        <a class="page-link"
-                           th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${page})}"
-                           th:text="${page}">
-                        </a>
-                    </li>
-
-                    <li class="page-item" th:classappend="*{!topicOffers.hasNext()} ? 'disabled': ''">
-                        <a class="page-link"
-                           th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 2})}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                        <li class="page-item" th:classappend="*{!topicOffers.hasNext()} ? 'disabled': ''">
+                            <a class="page-link"
+                               th:href="@{/offers(topic='', p1_size = ${speakerOffers.getSize()}, p1_page = ${speakerOffers.getNumber() + 1}, p2_size = ${topicOffers.getSize()}, p2_page = ${topicOffers.getNumber() + 2})}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>
